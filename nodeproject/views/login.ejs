@@ -1,0 +1,33 @@
+<%-include('templates/header')%>
+<!-- Main -->
+<section id="main" class="wrapper">
+	<div class="inner">
+		<div class="content">
+			<h3>Form</h3>
+			<form method="get" action="login1">
+				<div class="row gtr-uniform">
+					<div class="col-6 col-12-xsmall">
+						<input type="email" name="email" id="email" value="" placeholder="Email" />
+					</div>
+					<div class="col-6 col-12-xsmall">
+						<input type="password" name="password" id="password" value="" placeholder="Password" />
+					</div>
+					<!-- Break -->
+					<div class="col-12">
+						<ul class="actions">
+							<li><input type="submit" value="Login" class="primary" /></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+<!-- Footer -->
+		 <%-include('templates/footer')%>
+
+		<!-- Scripts -->
+		<%-include('templates/footerjs')%>
+
+	</body>
+</html>

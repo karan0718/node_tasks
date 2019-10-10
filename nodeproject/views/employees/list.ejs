@@ -1,0 +1,25 @@
+<h1 style="text-align:center"> Users List </h1>
+<table border="1", cellpadding="7", cellspacing="7" align="center" style="text-align:center">
+	<tr>
+		<th> No </th>
+		<th> User name </th>
+		<th> Email </th>
+		<th> Category </th>
+		<th> Delete </th>
+		<th> Edit </th>
+	</tr>
+
+	<% if(data.length) {
+			for(var i =0; i < data.length; i++){ %>
+				<tr>
+					<td><%= (i+1) %> </td>
+					<td><%= data[i].name %> </td>
+					<td><%= data[i].email %> </td>
+					<td><%= data[i].category %> </td>
+					<td><a href = "delete/<%= data[i].email %>"> Delete </a> </td>
+					<td><a href = "edit/<%= data[i].email %>"> Edit </a> </td>
+				</tr>
+		<%	}
+		} %>
+
+</table>
