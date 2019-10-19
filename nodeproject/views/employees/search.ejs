@@ -1,0 +1,52 @@
+<%-include('../templates/header')%>
+<!-- Main -->
+<section id="main" class="wrapper">
+	<div class="inner">
+		<div class="content">
+			<h3>Form</h3>
+			<form method="POST">
+				<input type="text" name="search" value="">
+				<ul class="ul-mine">
+				</ul>
+			</form>
+		</div>
+	</div>
+</section>
+<!-- Footer -->
+	<%-include('../templates/footer')%>
+	<!-- Scripts -->
+	<%-include('../templates/footerjs')%>
+  	<script type="text/javascript">
+  		$(document).ready(function(e){
+  			$('input[name="search"]').keyup(function(e){
+  				var key = $(this).val();
+  				console.log(key);
+  				$('.ul-mine').append("<li></li>");
+  				$.ajax({
+  					url:"http://localhost:4300/search/employee",
+  					method:"POST",
+  					data:{keyword:key},
+  					cache:true,
+  					headers:{
+  						contentType:"json",
+  					},
+  					dataType:"text",
+  					success: function(response,responseText){
+  						$('.ul-mine').empty();
+  						var res = JSON.parse(response);
+  						if(res.length > 0){
+  							for(var i=0; i<res.length;i++){
+  								$('.ul-mine').append("<li>"+res[i].name+"</li>");
+  							}
+  						}else{
+  							$('.ul-mine').append("<li>No User found</li>");
+  						}
+  					}
+  				});
+  			});
+  		});
+
+
+  	</script>
+	</body>
+</html>

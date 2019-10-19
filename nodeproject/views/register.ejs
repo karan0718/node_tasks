@@ -4,7 +4,7 @@
 	<div class="inner">
 		<div class="content">
 			<h3>Form</h3>
-			<form method="post" action="register1">
+			<form method="post" action="/register1" enctype="multipart/form-data">
 				<div class="row gtr-uniform">
 					<div class="col-6 col-12-xsmall">
 						<input type="text" name="name" id="name" value="" placeholder="Name" />
@@ -18,7 +18,7 @@
 					<!-- Break -->
 					<div class="col-12">
 						<select name="category" id="category">
-							<option value="">- Select -</option>
+							<option value="">- Select a category -</option>
 							<option value="alpha">Option alpha</option>
 							<option value="beta">Option beta</option>
 							<option value="gamma">Option gamma</option>
@@ -29,31 +29,35 @@
 							<option value="theta">Option theta</option>
 						</select>
 					</div>
-					<!-- Break -->
-					<div class="col-4 col-12-small">
-						<input type="radio" id="radio-alpha" name="radio" value="radio_alpha">
-						<label for="radio-alpha">Radio alpha</label>
+					<div class="col-12">
+						<select name="country">
+							<option value="">- Select a country -</option>
+							<% if(country.length > 0) {
+								for(var i = 0; i < country.length; i++){	%>
+									<option value="<%- country[i].id  %>"><%- country[i].name %></option>
+							<%  } }  %>
+						</select>
 					</div>
-					<div class="col-4 col-12-small">
-						<input type="radio" id="radio-beta" name="radio" value="radio_beta">
-						<label for="radio-beta">Radio beta</label>
+					
+					<div class="col-12">
+						<select name="state">
+							<option value="">- Select a state -</option>
+						</select>
 					</div>
-					<div class="col-4 col-12-small">
-						<input type="radio" id="radio-gamma" name="radio" value="radio_gamma">
-						<label for="radio-gamma">Radio gamma</label>
+
+
+					<div class="col-12">
+						<select name="city">
+							<option value="">- Select a city -</option>
+						</select>
 					</div>
-					<!-- Break -->
-					<div class="col-6 col-12-small">
-						<input type="checkbox" id="checkbox-alpha" name="checkbox" value="check_box_alpha">
-						<label for="checkbox-alpha">Checkbox alpha</label>
-					</div>
-					<div class="col-6 col-12-small">
-						<input type="checkbox" id="checkbox-beta" name="checkbox" value="check_box_beta">
-						<label for="checkbox-beta">Checkbox beta</label>
-					</div>
-					<!-- Break -->
+
+	
 					<div class="col-12">
 						<textarea name="description" id="textarea" placeholder="Alpha beta gamma delta" rows="6"></textarea>
+					</div>
+					<div class="col-12">
+						<input type="file" name="file" id="file">
 					</div>
 					<!-- Break -->
 					<div class="col-12">
@@ -72,6 +76,45 @@
 
 		<!-- Scripts -->
 		<%-include('templates/footerjs')%>
+
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("select[name='country']").on('change',function(){
+					var country = $(this).val();
+					$.ajax({
+						url:"/get/states/"+country,
+						method:"GET",
+						cache: true,
+						success: function(response,responseText){
+							if(response.length > 0){
+								$('select[name=state]').find('option').remove().end();
+								for(var i=0; i < response.length; i++){
+									$('select[name=state]').append('<option value='+ response[i].id +'>  '+ response[i].name +'  </option>');
+								}
+								$('select[name=city]').find('option').remove().end().append('<option value="">- Select a city -</option>');
+							}
+						}
+					});
+				});
+
+				$("select[name='state']").on('change',function(){
+					var stateId = $(this).val();
+					$.ajax({
+						url:"/get/cities/"+stateId,
+						method:"GET",
+						cache: true,
+						success: function(response,responseText){
+							$('select[name=city]').find('option').remove().end();
+							if(response.length > 0){
+								for(var i=0; i < response.length; i++){
+									$('select[name=city]').append('<option value='+ response[i].id +'>  '+ response[i].name +'  </option>');
+								}
+							}
+						}
+					});
+				});
+			});
+		</script>
 
 	</body>
 </html>

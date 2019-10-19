@@ -1,6 +1,6 @@
 var mysql = require('mysql')
 exports.list = function(req,res){
-	var con = mysql.createConnection({host:'localhost',user:'root',password:'ourdesignz',database:'node_exercise'});
+	var con = mysql.createConnection({host:'localhost',user:'roots',password:'',database:'node_exercise'});
 	var query = 'select * from employees';
 	con.query(query,function(err,result){
 		if(err) throw err;

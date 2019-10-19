@@ -1,25 +1,78 @@
-<h1 style="text-align:center"> Users List </h1>
-<table border="1", cellpadding="7", cellspacing="7" align="center" style="text-align:center">
-	<tr>
-		<th> No </th>
-		<th> User name </th>
-		<th> Email </th>
-		<th> Category </th>
-		<th> Delete </th>
-		<th> Edit </th>
-	</tr>
+<%-include('../templates/header')%>
+<!-- Main -->
+<section id="main" class="wrapper">
+	<div class="inner">
+		<input type="text" name="name" value="" placeholder="Search Name Here" />	
+		<div class="content">
+			<h3>User List</h3>
+			<div class="table-wrapper">
+				<table>
+					<thead>
+						<tr>
+							<th>No</th>
+							<th>User Name</th>
+							<th>Email</th>
+							<th>Category</th>
+							<th>Delete</th>
+							<th>Edit</th>
+						</tr>
+					</thead>
+					<% if(data.length){   %>
+						<tbody class="tbody-list">
+							<% for(var i=0; i < data.length; i++){ %>
+								<tr>
+									<td><%= (i+1) %> </td>
+									<td><%= data[i].name %> </td>
+									<td><%= data[i].email %> </td>
+									<td><%= data[i].category %> </td>
+									<td><a href = "/employee/delete/<%= data[i].id %>"> Delete </a> </td>
+									<td><a href = "/employee/edit/<%= data[i].id %>"> Edit </a> </td>
+								</tr>
+							<% } %> 
+						</tbody>
+					<% } else {%>
+						<tbody>No record found</tbody>
+					<% } %>	
+				</table>
+			</div>	
+		</div>
+	</div>
+</section>
+<!-- Footer -->
+		 <%-include('../templates/footer')%>
 
-	<% if(data.length) {
-			for(var i =0; i < data.length; i++){ %>
-				<tr>
-					<td><%= (i+1) %> </td>
-					<td><%= data[i].name %> </td>
-					<td><%= data[i].email %> </td>
-					<td><%= data[i].category %> </td>
-					<td><a href = "delete/<%= data[i].email %>"> Delete </a> </td>
-					<td><a href = "edit/<%= data[i].email %>"> Edit </a> </td>
-				</tr>
-		<%	}
-		} %>
+		<!-- Scripts -->
+		<%-include('../templates/footerjs')%>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("input[name=name]").keyup(function(){
+					var key = $(this).val();
+					$.ajax({
+						url:"/search/employee",
+						method: "POST",
+						data:{key:key},
+						cache:true,
+						headers:{
+							contentType:"JSON"
+						},
+						dataType:"text",
+						success: function(response,responseText){
+							var res = JSON.parse(response);
+							var data = '';
+							if(res.length > 0){
+								for(var i = 0; i < res.length; i++ ){
+									data += "<tr><td>"+res[i].id+"</td><td>"+res[i].name+"</td><td>"+res[i].email+"</td><td>"+res[i].category+"</td><td><a href = /employee/delete/"+res[i].id +"> Delete </a> </td><td><a href = /employee/edit/"+res[i].id +"> Delete </a> </td>";
+								}
+								$('.tbody-list').html(data);
+							}else{
+								console.log('dddddd');
+								$(".tbody-list").html('<tr><td  style="text-align:center"colspan=6>NO EMPLOYEE FOUND</td></tr>');
+							}
+						}
+					});
+				});
+			});
 
-</table>
+		</script>
+	</body>
+</html>
