@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+        </style>
+    </head>
+    <body>
+
+        <h2>Tasks List</h2>
+        <a href="/tasks/add"> Add a new task</a>
+        <a href="javascript:void(0)" name="delete_selected"> Delete Selected Tasks</a>
+        <table>
+            <tr>
+                <th><input type="checkbox" name="select_all"></th>
+                <th>Task Name</th>
+                <th>Owner</th>
+                <th>Time Limit</th>
+                <th>Action</th>
+            </tr>
+            <% for(var i=0; i< data.length; i++){ %>
+                <tr>
+                    <th><input type="checkbox" name="select" value="<%= data[i].id %>"></th>
+                    <td><%= data[i].name  %></td>
+                    <td><%= data[i].owner  %></td>
+                    <td><%= data[i].time_limit  %></td>
+                    <td><a href="tasks/<%= data[i].id %>">Edit</a> <a href="tasks/delete/<%= data[i].id %>">Delete</a></td>
+                </tr>
+            <% } %>
+
+        </table>
+
+    </body>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"> </script>
+    <script type="text/javascript">
+        $(function(){
+            $('input[name="select_all"]').on('click', function(){
+                var checked;
+                if($(this).is(":checked"))
+                    checked = true;
+                else
+                    checked = false;
+                $('input[name="select"]').each(function(){
+                    $(this).prop('checked', checked);
+                });
+            });
+            $('input[name="select"]').on('click', function(){
+                var allTrue = true;
+                $('input[name="select"]').each(function(){
+                    if(!$(this).is(":checked"))
+                        allTrue = false;
+                });
+                $('input[name="select_all"]').prop('checked',allTrue);
+            });
+            $('a[name="delete_selected"]').on('click', function(){
+                var selectedValues = [];
+                $('input[name="select"]').each(function(){
+                    if($(this).is(':checked'))
+                        selectedValues.push($(this).val());
+                });
+                if(selectedValues.length > 0){
+                    var selectedValues = selectedValues.join(',');
+                    $.ajax({
+                        url: "tasks/delete/"+selectedValues,
+                        method: "GET",
+                        success: function(data){
+                            window.location.href = "tasks/"
+                        },error: function() {
+
+                        }
+                    });
+                }else{
+                    alert('Please select a record to delete');
+                }
+            });
+        });
+    </script>
+</html>

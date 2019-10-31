@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Add Tasks </title>
+</head>
+<body>
+	<form method="POST" name="add_task" action="/tasks/store">
+		<label> Task Name: </label>
+		<input type="text" name="task_name"> <br />
+		<label> Owner: </label>
+		<input type="text" name="owner"> <br />
+		<label> Time Limit: </label>
+		<input type="text" name="time_limit"> <br />
+		<input type="submit" name="button" value="Add Task">
+	</form>
+</body>
+</html>

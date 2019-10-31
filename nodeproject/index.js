@@ -30,7 +30,7 @@ app.set(express.json());
 
 var employee = require('./routes/employee');
 
-var con = mysql.createConnection({host:'localhost',user:'roots',password:'',database:'node_exercise'});
+var con = mysql.createConnection({host:'localhost',user:'root',password:'ourdesignz',database:'node_exercise'});
 app.use(express.static(path.join(__dirname,'public')));
 //app.use(express.static(path.join(__dirname,js)))
 app.get('/',function(req,res){

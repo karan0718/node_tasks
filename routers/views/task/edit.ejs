@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Edit Tasks </title>
+</head>
+<body>
+	<form method="POST" name="edit_task" action="/tasks/update">
+		<label> Task Name: </label>
+		<input type="text" name="task_name" value="<%= task[0].name  %>"> <br />
+		<label> Owner: </label>
+		<input type="text" name="owner" value="<%= task[0].owner  %>"> <br />
+		<label> Time Limit: </label>
+		<input type="text" name="time_limit" value="<%= task[0].time_limit  %>"> <br />
+		<input type="hidden" name="id" value="<%= task[0].id  %>">
+		<input type="submit" name="button" value="Update Task">
+	</form>
+</body>
+</html>

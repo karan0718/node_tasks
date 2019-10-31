@@ -1,0 +1,28 @@
+{
+  "name": "routers",
+  "version": "1.0.0",
+  "description": "router uses as proffesional",
+  "main": "index.js",
+  "scripts": {
+    "test": "www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "www"
+  },
+  "keywords": [
+    "www"
+  ],
+  "author": "w",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "ejs": "^2.7.1",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "mysql": "^2.17.1",
+    "nodemon": "^1.19.4"
+  }
+}
