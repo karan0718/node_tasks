@@ -11,6 +11,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var userRoutes = require('./app/routes/user');
 var configDB = require('./dbConnection.js');
+var department = require('./app/routes/department');
 
 require('./config/passport')(passport);
 
@@ -26,7 +27,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./app/routes')(app, passport);
-app.use('/user',userRoutes);
+app.use('/department',department);
 
 app.listen(port, function(){
 	console.log('server start on port '+port)

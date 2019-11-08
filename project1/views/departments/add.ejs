@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Add Departments</title>
+	</head>
+	<body>
+		<% if(department != ''){ %>
+			<form method="POST" action="/department/update/<%= department[0].id %>">
+				<label>Deparment Name: </label>
+				<input type="text" name="department_name" value="<%= department[0].name  %>">
+				<button type="submit">Update Department Name</button>
+			</form>
+		<% }else { %>
+			<form method="POST" action="/department/store">
+				<label>Deparment Name: </label>
+				<input type="text" name="department_name">
+				<button type="submit">Add Department Name</button>
+			</form>
+		<% } %>
+</body>
+</html>

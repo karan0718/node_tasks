@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table {
+              font-family: arial, sans-serif;
+              border-collapse: collapse;
+              width: 100%;
+            }
+
+            td, th {
+              border: 1px solid #dddddd;
+              text-align: left;
+              padding: 8px;
+            }
+
+            tr:nth-child(even) {
+              background-color: #dddddd;
+            }
+        </style>
+    </head>
+    <body>
+        <h2>HTML Table</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Action</th>
+            </tr>
+            <% if(status === true){ 
+                for(var i=0; i < result.length; i++ ){
+            %>
+                <tr>
+                    <th><%= result[i].name %></th>
+                    <th> 
+                        <a href="/department/edit/<%= result[i].id %>"> Edit </a>
+                        <a href="/department/delete/<%= result[i].id %>"> Delete </a>
+                    </th>
+                </tr>
+            <% }
+            } %>
+
+        </table>
+
+    </body>
+</html>

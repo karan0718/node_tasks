@@ -33,6 +33,9 @@ module.exports = function(app, passport){
 		req.logout();
 		res.redirect('/');
 	});
+	app.get('/post/add', function(req,res){
+		res.render('posts/add');
+	});
 
 };
 
