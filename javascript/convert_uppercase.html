@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Convert to Upper Case</title>
+</head>
+<body>
+	<form name="convert-upper" method="POST" onsubmit="return convert()">
+		<input type="text" name="string">
+		<input type="submit" name="submit" value="Convert To UpperCase">
+	</form>
+</body>
+<script type="text/javascript">
+	function convert(){
+		var string = document.forms['convert-upper']['string'].value;
+		console.log(string.toUpperCase());
+		return false;
+	}
+
+</script>
+
+</html>

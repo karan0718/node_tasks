@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Validation Using Javascript</title>
+</head>
+<body>
+	<form name="register-form"  method="POST" onsubmit="return validateForm()">
+		<label for="username">Username: </label>
+		<input type="text" name="username"><br>
+		<label for="password">Password: </label>
+		<input type="password" name="password"><br>
+		<label for="gender">Gender: </label>
+		<input type="radio" name="gender" value="male">Male
+		<input type="radio" name="gender" value="female">Female
+		<input type="radio" name="gender" value="other">Other <br>
+		<label for="email">Email: </label>
+		<input type="text" name="email" ><br>
+		<input type="submit" name="submit">
+	</form>
+</body>
+<script type="text/javascript">
+	function validateForm(){
+		var username = document.forms['register-form']['username'].value;
+		var password = document.forms['register-form']['password'].value;
+		var gender = document.forms['register-form']['gender'].value;
+		var email = document.forms['register-form']['email'].value;
+		if(username.trim() == ''){
+			alert('Username is empty. Please provide username.');
+			return false;
+		}else if(username.match(/[!@#$%^&*(),.?":{}|<>]/g)){
+			alert('Username is invalid. Username must not contain special characters');
+			return false;
+		}else if(password.trim() == ''){
+			alert('Password can not be empty. Please insert password.');
+			return false;
+		}else if(!password.match(/[!@#$%^&*(),.?":{}|<>]/g) && !password.match(/[0-9]/g)){
+			alert('Password must contain a special character and numeric');
+			return false;
+		}else if(gender.trim() == ''){
+			alert('Please select a gender to continue');
+			return false;
+		}else if(email.trim() == ''){
+			alert('Please enter email address');
+			return false;
+		}else if(!email.match(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)){
+			alert('Please insert valid email adderss');
+			return false;
+		}else{
+			alert('Form is valid');
+			return false;
+		}
+	}
+</script>
+</html>

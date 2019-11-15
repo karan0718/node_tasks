@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Image Slider</title>
+</head>
+<body>
+	<img id="image" src="images/image1.jpg"><br>
+	<button name="next">Next</button>
+</body>
+</html>
+
+<script type="text/javascript">
+	imageArr = ['image1.jpg','image2.jpeg','image3.jpeg','image4.jpeg','image5.jpeg','image6.jpeg','image7.jpeg']
+	var imgLength = imageArr.length;
+	var a = 0;
+	slides()
+	function slides(){
+		setTimeout(slides,3000);
+		a = a+1;
+		if(a>=imgLength)
+			a = 0;
+		document.getElementById('image').src = 'images/'+imageArr[a]
+	}
+
+</script>

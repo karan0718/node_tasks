@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Greater Among 3 numbers</title>
+</head>
+<body>
+	<form method="POST" name="greater-number" onsubmit="return getGreaterNumber()">
+		<label for="first_number">First Number: </label>
+		<input type="text" name="first_number"><br>
+		<label for="second_number">Second Number: </label>
+		<input type="text" name="second_number"><br>
+		<label for="third_number">Second Number: </label>
+		<input type="text" name="third_number"><br>
+		<input type="submit" name="submit" value="Get Greater Number">
+	</form>
+</body>
+</html>
+
+<script type="text/javascript">
+	function getGreaterNumber(){
+		var first_number = parseInt(document.forms['greater-number']['first_number'].value);
+		var second_number = parseInt(document.forms['greater-number']['second_number'].value);
+		var third_number = parseInt(document.forms['greater-number']['third_number'].value);
+		if(  Number.isNaN(first_number) ){
+			alert("Please insert correct value in first number.");
+			return false;
+		} else if( Number.isNaN(second_number)){
+			alert("Please insert correct value in second number");
+			return false;
+		} else if( Number.isNaN(third_number) ){
+			alert('Please insert correct value in third number');
+			return false;
+		}
+		if((first_number >= second_number) && (first_number >= third_number)){
+			console.log(first_number+' is greater');
+		} else if((second_number >= third_number) && (second_number >= first_number)){
+			console.log(second_number+' is greater');
+		}else{
+			console.log(third_number+' is greater');
+		}
+		return false;
+	}
+
+</script>
