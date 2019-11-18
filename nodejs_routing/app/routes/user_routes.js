@@ -3,7 +3,8 @@ var routes = express.Router();
 var formidable = require('formidable');
 var fs = require('fs');
 var randomstring = require("randomstring");
-var mongoose = require('mongoose');
+var User = require('../models/user_model');
+var session = require('express-session');
 
 routes.get('/register', function(req,res){
 	res.render('users/register');
@@ -16,25 +17,55 @@ routes.post('/register', function(req,res){
 			if(err) throw err;
 			fs.writeFile('public/uploads/user_images/'+image_name,data, function(err){
 				if(err) throw err;
-				fields.user_image = image_name;
-				var url = "mongodb://localhost:27017/restaurants";
-				mongoose.connect(url, function(err,db){
-					if(err){
+				var user = new User({
+					username   : fields.username,
+					password   : fields.password,
+					email	   : fields.email,
+					user_image : image_name
+				});
+				user.save(function(err){
+					if(err){ 
 						throw err;
-					}	
-					//console.log(fields);
-					db.collection('restaurants').find({}).toArray(function(err,result){
-						if(err){
-							console.log('eeeee');
-						}
-						console.log(result);
-					})
-					//db.collection('users').insert(fields);
-					db.close();
-				})
-				res.send('User Inserted');
+					}
+					res.send('User Inserted');
+				});
 			});
 		});
 	});
-})
+});
+routes.get('/login',function(req,res){
+	if(!req.session.username){
+		res.render('users/login');
+	}else{
+		res.redirect('/user/profile');
+	}
+});
+routes.post('/login',function(req,res){
+	if(!req.session.username){
+		User.findOne({username:req.body.username}, function(err,result){
+			if(err) throw err;
+			if(result){
+				if(result.password === req.body.password){
+					req.session.username = result.username;
+					res.redirect('/user/profile');
+				}else{
+					res.render('/user/login');
+				}
+			}
+		});
+	}else{
+		res.redirect('/user/profile');
+	}
+});
+routes.get('/profile', function(req,res){
+	if(req.session.username){
+		User.findOne({username:req.session.username}, function(err,result){
+			if(err) throw err;
+			console.log(result);
+			res.render('users/profile',{user:result});
+		});
+	}else{
+		res.redirect('/user/login');
+	}
+});
 module.exports = routes;
