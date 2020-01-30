@@ -11,6 +11,11 @@ class Users{
 		return sql;
 	}
 
+	static update(name,password,email,id){
+		let sql = `UPDATE users SET name='${name}', email='${email}', password='${password}'  where id=`+id;
+		return sql;
+	}
+
 	static getAllUsers(){
 		let sql = `SELECT * FROM users where type != 'admin'`;
 		return sql;
@@ -23,6 +28,11 @@ class Users{
 
 	static findUserByEmail(email=null){
 		let sql = `SELECT * FROM users where email='${email}' limit 1`;
+		return sql;
+	}
+
+	static findUserByEmailAndId(email=null,id=null){
+		let sql = `SELECT * FROM users where email='${email}' and id != ${id} limit 1`;
 		return sql;
 	}
 

@@ -9,8 +9,29 @@ const UserLogin = require('./routes/userLogin');
 const User = require('./routes/users');
 const passport = require('passport');
 const session = require('express-session');
-
+const MySQLStore = require('express-mysql-session')(session);
+const cookieParser = require('cookie-parser');
 require('./config/passport')(passport);
+
+const options = {
+    host: 'localhost',
+    port: 3306,
+    user: 'roots',
+    password: '',
+    database: 'node_catering'
+};
+
+const sessionStore = new MySQLStore(options);
+
+app.use(cookieParser());
+app.use(session({
+    key: 'session_cookie_name',
+    secret: 'session_cookie_secret',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+}));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:false}));

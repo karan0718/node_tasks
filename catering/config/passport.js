@@ -12,7 +12,7 @@ module.exports = function(passport) {
             passReqToCallback: true // allows us to pass back the entire request to the callback
         },
         function(req, email, password, done) {
-            req = req.body;
+            request = req.body;
             const generateHash = function(){
                 return bCrypt.hashSync(password,bCrypt.genSaltSync(8),null);
             }
@@ -23,7 +23,7 @@ module.exports = function(passport) {
                     return done(null, false, "Email is already used");
                 }else{
                     const userPassword = generateHash(password);
-                    let user = new userModel(req.name,req.email,userPassword,req.type);
+                    let user = new userModel(request.name,request.email,userPassword,request.type);
                     user = connection.query(user.addUser(), (err,result) => {
                         if(err)
                             return done(null, false, "Database error while adding user.");
@@ -31,10 +31,14 @@ module.exports = function(passport) {
                             connection.query(userModel.findUserById(result.insertId),(err,result) => {
                                 if(err)
                                     return done(null, false, "Database error while checking user email.");
-                                if(result.length > 0)
+                                if(result.length > 0){
+                                    req.session.isLoggedIn = true;
+                                    req.session.user = result[0];
                                     return done(null, result[0]);
-                                else
+                                }
+                                else{
                                     return done(null,false);
+                                }
                             })
                         }else{
                             return done(null,false);
@@ -57,7 +61,7 @@ module.exports = function(passport) {
             const isValidPassword = (userpass, password) => {
                 return bCrypt.compareSync(userpass,password)
             }
-            req = req.body;
+            request = req.body;
             connection.query(userModel.findUserByEmail(email), (err,response) => {
                 if(err)
                     done(null, false, "Databse connectivity isuue");
@@ -65,10 +69,14 @@ module.exports = function(passport) {
                     done(null,false, "No user found with matching email id");
                 }else{
                     const user = response[0];
-                    if(!isValidPassword(password,user.password))
+                    if(!isValidPassword(password,user.password)){
                         done(null,false,"Password is incorrect");
-                    else
+                    }
+                    else{
+                        req.session.isLoggedIn = true;
+                        req.session.user = user;
                         done(null,user);
+                    }
                 }
             });
         }
