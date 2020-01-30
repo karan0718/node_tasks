@@ -3,7 +3,7 @@ const router = express.Router();
 const userModel = require('../models/Users');
 const connection = require('../database/databaseConnection');
 
-router.get('/', (req,res,next) => {
+router.get('/', isLoggedIn,  (req,res,next) => {
 	connection.query(userModel.getAllUsers(), (err,result) => {
 		if(err)
 			throw err;
@@ -13,5 +13,9 @@ router.get('/', (req,res,next) => {
 		})
 	});
 });
-
+function isLoggedIn(req, res, next) {
+	if (req.isAuthenticated())
+		return next();
+	res.status(400).json({message:'Please login first'});
+}
 module.exports = router;

@@ -20,5 +20,15 @@ class Users{
 		let sql = `SELECT * FROM users where email='${email}' and password='${password}' limit 1`;
 		return sql;
 	}
+
+	static findUserByEmail(email=null){
+		let sql = `SELECT * FROM users where email='${email}' limit 1`;
+		return sql;
+	}
+
+	static findUserById(id=null){
+		let sql = `SELECT * FROM users where id=${id}`;
+		return sql;
+	}
 }
 module.exports = Users;
