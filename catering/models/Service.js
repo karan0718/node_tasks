@@ -9,6 +9,16 @@ class Service{
 	addService(){
 		return `INSERT INTO services (service_name,user_id,city,price) VALUES ('${this.service_name}','${this.user_id}','${this.city}','${this.price}')`;
 	}
+
+	static getServiceById(id=null){
+		let sql = `SELECT * FROM services where id=${id}`;
+		return sql;
+	}
+
+	static updateService(serviceId, serviceName, serviceCity, servicePrice){
+		let sql = `UPDATE services SET service_name='${serviceName}', city='${servicePrice}', price='${servicePrice}' where id=${serviceId}`;
+		return sql;
+	}
 }
 
 module.exports = Service;

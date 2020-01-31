@@ -4,20 +4,22 @@ const port = process.env.PORT || 4000;
 const db = require('./database/databaseConnection');
 const create_admin = require('./database/createAdmin');
 const bodyParser = require('body-parser');
-const UserRegister = require('./routes/userRegistration');
-const UserLogin = require('./routes/userLogin');
-const User = require('./routes/users');
 const passport = require('passport');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const cookieParser = require('cookie-parser');
 require('./config/passport')(passport);
 
+const UserRegister = require('./routes/userRegistration');
+const UserLogin = require('./routes/userLogin');
+const User = require('./routes/users');
+const Service = require('./routes/services');
+
 const options = {
     host: 'localhost',
     port: 3306,
-    user: 'roots',
-    password: '',
+    user: 'root',
+    password: 'ourdesignz',
     database: 'node_catering'
 };
 
@@ -42,6 +44,7 @@ app.use(passport.session());
 app.use('/register', UserRegister);
 app.use('/users', User);
 app.use('/login',UserLogin);
+app.use('/service',Service);
 
 app.listen(port, function(){
 	console.log('server start on port '+port)
