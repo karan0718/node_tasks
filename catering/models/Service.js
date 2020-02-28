@@ -19,6 +19,16 @@ class Service{
 		let sql = `UPDATE services SET service_name='${serviceName}', city='${servicePrice}', price='${servicePrice}' where id=${serviceId}`;
 		return sql;
 	}
+
+	static getServices(){
+		let sql = `SELECT * FROM services`;
+		return sql;
+	}
+
+	static deleteServiceById(id=null){
+		let sql = `DELETE from services where id=${id}`
+		return sql;
+	}
 }
 
 module.exports = Service;
